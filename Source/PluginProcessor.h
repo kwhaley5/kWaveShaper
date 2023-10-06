@@ -60,6 +60,7 @@ public:
     juce::AudioProcessorValueTreeState apvts{ *this, nullptr, "parameters", createParameterLayout() };
 
 private:
+    float test;
 
     juce::dsp::WaveShaper<float> waveshaper;
 

@@ -156,7 +156,7 @@ void WaveShaperAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
     {
         float* channelData = buffer.getWritePointer(channel);
 
-        if (typeSelect->get() == 1)
+        if (typeSelect->get() == 1) //Wavefolds quickly, probably limit to 2
         {
             
             auto z = juce::MathConstants<float>::pi * amount->get();
@@ -176,7 +176,50 @@ void WaveShaperAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
                 
             }
         }
+
+        else if (typeSelect->get() == 2)
+        {
+            for (int s = 0; s < buffer.getNumSamples(); ++s)
+            {
+                channelData[s] = channelData[s] * (abs(channelData[s]) + amount->get()) / (pow(channelData[s], 2) + (amount->get() - 1) * abs(channelData[s]) + 1); //Simple, crunchy wavefolding
+                test = juce::Decibels::gainToDecibels(channelData[s]);
+                
+            }
+        }
+
+        else if (typeSelect->get() == 3) //has to be less then 1
+        {
+            auto factor = 2 * amount->get() / (1 - amount->get());
+
+            for (int s = 0; s < buffer.getNumSamples(); ++s)
+            {
+               channelData[s] =  ((1 + factor) * channelData[s]) / (1 + factor * abs(channelData[s]));
+            }
+
+        }
+
+        else if (typeSelect->get() == 4) //this would be more useful in an on off scenario, like synth
+        {
+            for (int s = 0; s < buffer.getNumSamples(); ++s) 
+            {
+                channelData[s] = 1.5 * channelData[s] - .5 * pow(channelData[s], 3);
+            }
+        }
+
+        else
+        {
+            for (int s = 0; s < buffer.getNumSamples(); ++s) //Another good distrotion, maybe go up to 10?
+            {
+                auto distort = channelData[s] * amount->get();
+                auto constant = 1 + exp(sqrt(fabs(distort)) * -0.75);
+
+                channelData[s] = (exp(distort) - exp(-distort * constant)) / (exp(distort) + exp(-distort));
+            }
+        }
     }
+
+
+    //Now lets try our hands at a clipper
     
 
 
