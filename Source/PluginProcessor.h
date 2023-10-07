@@ -65,6 +65,7 @@ private:
     //juce::AudioBuffer<float>& clipperBuffer;
 
     juce::AudioParameterInt* typeSelect{ nullptr };
+    juce::AudioParameterInt* clipSelect{ nullptr };
     juce::AudioParameterFloat* amount{ nullptr };
     juce::AudioParameterFloat* threshold{ nullptr };
     //==============================================================================

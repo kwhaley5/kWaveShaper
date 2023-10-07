@@ -24,6 +24,7 @@ WaveShaperAudioProcessor::WaveShaperAudioProcessor()
 {
     typeSelect = dynamic_cast<juce::AudioParameterInt*>(apvts.getParameter("typeSelect"));
     amount = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter("amount"));
+    clipSelect = dynamic_cast<juce::AudioParameterInt*>(apvts.getParameter("clipSelect"));
     threshold = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter("threshold"));
 }
 
@@ -220,22 +221,44 @@ void WaveShaperAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
 
         else
         {
-            //for (int s = 0; s < buffer.getNumSamples(); ++s) //This seems to work, but it would tech be hard clipping
+
+            //for (int s = 0; s < buffer.getNumSamples(); ++s) //This breaks, will keep for reference
             //{
-            //    auto gain = juce::Decibels::decibelsToGain(threshold->get());
-            //    channelData[s] > gain ? channelData[s] = gain : channelData[s] = channelData[s];
+            //    auto t = juce::Decibels::decibelsToGain(threshold->get());
+            //    channelData[s] = (channelData[s] - t + pow(t, 2)) / channelData[s];
+
             //}
 
+        }
+
+        if (clipSelect->get() == 1)
+        {
             for (int s = 0; s < buffer.getNumSamples(); ++s) //This seems to work, but it would tech be hard clipping
             {
-                auto t = juce::Decibels::decibelsToGain(threshold->get());
-                channelData[s] = (channelData[s] - t + pow(t, 2)) / channelData[s];
-
+                auto gain = juce::Decibels::decibelsToGain(threshold->get());
+                channelData[s] > gain ? channelData[s] = gain : channelData[s] = channelData[s];
             }
-            //Possible Algo:
-            //(input - threshold + threshold^2)/input
-            
+        }
 
+        else if (clipSelect->get() == 2) //this distorts the crap out of it, not sure if I did it right
+        {
+            for (int s = 0; s < buffer.getNumSamples(); ++s)
+            {
+                auto gain = juce::Decibels::decibelsToGain(threshold->get());
+
+                if (channelData[s] > gain)
+                {
+                    channelData[s] = gain * (2 / 3);
+                }
+                else if (channelData[s] < -gain)
+                {
+                    channelData[s] = -gain * (2 / 3);
+                }
+                else
+                {
+                    channelData[s] = channelData[s] - (pow(channelData[s], 3) / 3);
+                }
+            }
         }
     }
 
@@ -281,6 +304,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout WaveShaperAudioProcessor::cr
 
     layout.add(std::make_unique<AudioParameterInt>("typeSelect", "Disrotion Type", 1, 6, 1));
     layout.add(std::make_unique<AudioParameterFloat>("amount", "Distortion Factor", amountRange, 1));
+    layout.add(std::make_unique<AudioParameterInt>("clipSelect", "Clipper Type", 1, 5, 1));
     layout.add(std::make_unique<AudioParameterFloat>("threshold", "Clipper Treshold", threshRange, 0));
 
     return layout;
