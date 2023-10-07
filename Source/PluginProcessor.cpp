@@ -24,6 +24,7 @@ WaveShaperAudioProcessor::WaveShaperAudioProcessor()
 {
     typeSelect = dynamic_cast<juce::AudioParameterInt*>(apvts.getParameter("typeSelect"));
     amount = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter("amount"));
+    threshold = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter("threshold"));
 }
 
 WaveShaperAudioProcessor::~WaveShaperAudioProcessor()
@@ -206,7 +207,7 @@ void WaveShaperAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
             }
         }
 
-        else
+        else if (typeSelect->get() == 5)
         {
             for (int s = 0; s < buffer.getNumSamples(); ++s) //Another good distrotion, maybe go up to 10?
             {
@@ -216,8 +217,27 @@ void WaveShaperAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
                 channelData[s] = (exp(distort) - exp(-distort * constant)) / (exp(distort) + exp(-distort));
             }
         }
-    }
 
+        else
+        {
+            //for (int s = 0; s < buffer.getNumSamples(); ++s) //This seems to work, but it would tech be hard clipping
+            //{
+            //    auto gain = juce::Decibels::decibelsToGain(threshold->get());
+            //    channelData[s] > gain ? channelData[s] = gain : channelData[s] = channelData[s];
+            //}
+
+            for (int s = 0; s < buffer.getNumSamples(); ++s) //This seems to work, but it would tech be hard clipping
+            {
+                auto t = juce::Decibels::decibelsToGain(threshold->get());
+                channelData[s] = (channelData[s] - t + pow(t, 2)) / channelData[s];
+
+            }
+            //Possible Algo:
+            //(input - threshold + threshold^2)/input
+            
+
+        }
+    }
 
     //Now lets try our hands at a clipper
     
@@ -257,9 +277,11 @@ juce::AudioProcessorValueTreeState::ParameterLayout WaveShaperAudioProcessor::cr
     AudioProcessorValueTreeState::ParameterLayout layout;
 
     auto amountRange = NormalisableRange<float>(.1, 5, .1, 1);
+    auto threshRange = NormalisableRange<float>(-60, 0, .1, 1);
 
-    layout.add(std::make_unique<AudioParameterInt>("typeSelect", "Disrotion Type", 1, 5, 1));
+    layout.add(std::make_unique<AudioParameterInt>("typeSelect", "Disrotion Type", 1, 6, 1));
     layout.add(std::make_unique<AudioParameterFloat>("amount", "Distortion Factor", amountRange, 1));
+    layout.add(std::make_unique<AudioParameterFloat>("threshold", "Clipper Treshold", threshRange, 0));
 
     return layout;
 }

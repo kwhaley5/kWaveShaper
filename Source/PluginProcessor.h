@@ -62,10 +62,11 @@ public:
 private:
     float test;
 
-    juce::dsp::WaveShaper<float> waveshaper;
+    //juce::AudioBuffer<float>& clipperBuffer;
 
     juce::AudioParameterInt* typeSelect{ nullptr };
     juce::AudioParameterFloat* amount{ nullptr };
+    juce::AudioParameterFloat* threshold{ nullptr };
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (WaveShaperAudioProcessor)
 };
