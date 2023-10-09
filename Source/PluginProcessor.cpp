@@ -160,9 +160,10 @@ void WaveShaperAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
 
         if (typeSelect->get() == 1) //Wavefolds quickly, probably limit to 2
         {
+            float a;
             
             auto z = juce::MathConstants<float>::pi * amount->get();
-            auto a = 1 / sin(z);
+            sin(z) == 0 ? a = .03 : 1 / sin(z);
             auto b = 1 / amount->get();
 
             for (int s = 0; s < buffer.getNumSamples(); ++s)
@@ -237,34 +238,23 @@ void WaveShaperAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
             {
                 auto gain = juce::Decibels::decibelsToGain(threshold->get());
                 channelData[s] > gain ? channelData[s] = gain : channelData[s] = channelData[s];
+                channelData[s] < -gain ? channelData[s] = -gain : channelData[s] = channelData[s];
             }
         }
 
-        else if (clipSelect->get() == 2) //this distorts the crap out of it, not sure if I did it right
+        else if (clipSelect->get() == 2) //Not sure why this isn't doing anything
         {
             for (int s = 0; s < buffer.getNumSamples(); ++s)
             {
                 auto gain = juce::Decibels::decibelsToGain(threshold->get());
+                auto cubic = gain - (pow(gain, 3) / 3);
+                channelData[s] > gain ? channelData[s] = cubic : channelData[s] = channelData[s];
+                channelData[s] < -gain ? channelData[s] = -cubic : channelData[s] = channelData[s];
+                
 
-                if (channelData[s] > gain)
-                {
-                    channelData[s] = gain * (2 / 3);
-                }
-                else if (channelData[s] < -gain)
-                {
-                    channelData[s] = -gain * (2 / 3);
-                }
-                else
-                {
-                    channelData[s] = channelData[s] - (pow(channelData[s], 3) / 3);
-                }
             }
         }
     }
-
-    //Now lets try our hands at a clipper
-    
-
 
 }
 

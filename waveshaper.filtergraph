@@ -61,11 +61,11 @@
       </OUTPUTS>
     </LAYOUT>
   </FILTER>
-  <FILTER uid="5" x="0.4411027568922306" y="0.6638655462184874" useARA="0"
-          uiLastX_Normal="1413" uiLastY_Normal="640" uiopen_Normal="1">
+  <FILTER uid="5" x="0.3583959899749373" y="0.5189075630252101" useARA="0"
+          uiLastX_Normal="1461" uiLastY_Normal="806" uiopen_Normal="1">
     <PLUGIN name="WaveShaper" format="VST3" category="Fx|Distortion" manufacturer="KiTiK Music"
             version="1.0.0" file="C:\Program Files\Common Files\VST3\WaveShaper.vst3\Contents\x86_64-win\WaveShaper.vst3"
-            uniqueId="f5a9d52a" isInstrument="0" fileTime="18b079b1265" infoUpdateTime="18b079b672b"
+            uniqueId="f5a9d52a" isInstrument="0" fileTime="18b11949348" infoUpdateTime="18b1195e75f"
             numInputs="2" numOutputs="2" isShell="0" hasARAExtension="0"
             uid="e954f764"/>
     <STATE>191.VMjLgXK....O+fWarAhckI2bo8la8HRLt.iHfTlai8FYo41Y8HRUTYTK3HxO9.BOVMEUy.Ea0cVZtMEcgQWY9vSRC8Vav8lak4Fc9XCLt3hKt3hKt3hKt3hYRUUSTEETIckVwTjQisVTTgkdEYjKAQjYPQSPWgUdMcjKAQjct3hdA4hKt3hKt3hKtnTUv.UQAslXuk0UXoWUFE0YQcEV77RRC8Vav8lak4Fc9vyKVMEUy.Ea0cVZtMEcgQWY9..</STATE>
@@ -78,11 +78,11 @@
       </OUTPUTS>
     </LAYOUT>
   </FILTER>
-  <FILTER uid="7" x="0.4636591478696742" y="0.3571428571428572" useARA="0"
-          uiLastX_Normal="415" uiLastY_Normal="297" uiopen_Normal="1">
+  <FILTER uid="7" x="0.5100250626566416" y="0.2920168067226891" useARA="0"
+          uiLastX_Normal="1619" uiLastY_Normal="188" uiopen_Normal="1">
     <PLUGIN name="AudioFilePlayer" format="VST3" category="Fx" manufacturer="Matkat Music LLC"
             version="1.0.0" file="C:\Users\kylew\Desktop\vst\AudioFilePlayer.vst3"
-            uniqueId="79fe81c" isInstrument="0" fileTime="181db637e94" infoUpdateTime="18b079b672b"
+            uniqueId="79fe81c" isInstrument="0" fileTime="181db637e94" infoUpdateTime="18b1195e75f"
             numInputs="2" numOutputs="2" isShell="0" hasARAExtension="0"
             uid="e95d02c7"/>
     <STATE>490.VMjLgDd....O+fWarAhckI2bo8la8HRLt.iHfTlai8FYo41Y8HRUTYTK3HxO9.BOVMEUy.Ea0cVZtMEcgQWY9vSRC8Vav8lak4Fc9HCNy3BTIISX1UEaho2ZVkUdAAkKAwDUigWRWkEcQ0VTucmUY4BQ1YWQLolShUELhsVRxHlXyYEYxUULiIVTTkUdyYzX0EzQW0TUWoUdMYzUAkjQgsVTxDFc2sFSz4BdTcFLFIlbUEiXhUTZKYFSTQ1bEYzXu0TLhI1XTM1aQcEV3EjPTcVSwnUd2ACT00zUgUWSGgzQUckV5UDahYlc5EVcAIiXl4xZhsVVWo0ZiczULgSLgYWP3QkdUYUX4cGLPQCLVgkdqECV4EjTKYFVTkULUwlXlomPHcGRS0jYHQDUMEjTPYldToEc2ACTz.iUXo2ZwfUdAI0RlgEUYESUrIlY5IDR2gzTMYFRDQUSAIETloGUZQWPRM0YqwVXlIFUi8VTWgEdzf2Xmk0Qt3hKt3hKt3hKt3hKtnTUv.UQAslXuk0UXoWUFE0YQcEVtPDTtHzZGI1YMIiXtPDTtLjKPcjKt3hKt3hKt3haTU0PUQDU3sFaicVTWkEQEYzXmEDOujzPu0Fbu4VYtQmO77hUSQ0LPwVcmklaSQWXzUlO..</STATE>
@@ -95,10 +95,45 @@
       </OUTPUTS>
     </LAYOUT>
   </FILTER>
+  <FILTER uid="8" x="0.2681704260651629" y="0.2941176470588235" useARA="0">
+    <PLUGIN name="Sine Wave Synth" format="Internal" category="Synth" manufacturer="JUCE"
+            version="1.0.0" file="Sine Wave Synth" uniqueId="16fd76a8" isInstrument="1"
+            fileTime="0" infoUpdateTime="0" numInputs="0" numOutputs="2"
+            isShell="0" hasARAExtension="0" uid="16fd76a8"/>
+    <STATE>0.</STATE>
+    <LAYOUT>
+      <INPUTS/>
+      <OUTPUTS>
+        <BUS index="0" layout="L R"/>
+      </OUTPUTS>
+    </LAYOUT>
+  </FILTER>
+  <FILTER uid="9" x="0.4398496240601504" y="0.7310924369747899" useARA="0"
+          uiLastX_Normal="314" uiLastY_Normal="279" uiopen_Normal="1">
+    <PLUGIN name="MOscilloscope" format="VST3" category="Fx|Tools" manufacturer="MeldaProduction"
+            version="16.09" file="C:\Program Files\Common Files\VST3\MeldaProduction\Tools\MOscilloscope.vst3"
+            uniqueId="1ecc862b" isInstrument="0" fileTime="18b007032f8" infoUpdateTime="18b1195e760"
+            numInputs="2" numOutputs="2" isShell="0" hasARAExtension="0"
+            uid="f4e07c68"/>
+    <STATE>835.VMjLgny....O+fWarAhckI2bo8la8HRLt.iHfTlai8FYo41Y8HRUTYTK3HxO9.BOVMEUy.Ea0cVZtMEcgQWY9vSRC8Vav8lak4Fc9HSM13xLuM1ULUWbBIzPCUjKtfSMtEVNIgjdMc2ZyrjcyYzRvszbTU1TG0TLDoTP0oVXIkjRnMjPNo2JGsxP2rxcYMlUQczX43xQHkEUVYkTvszUogDM38lTqMEM3n0TmMzLA4RbF8DVvAUXtjjK1MGaUM1PzDFUV0FaLA0StQ1Pl8jUvgiZi8VNxIjXCgkbwfyQNQzLQo1cgkDQUYkLXkFVGAmZtLzL4Y2PEoUdJglciITXDclatoGNUQVdSQTan0lZNIza2fyJrgUSzb2RVYEZZU2U3XCaAgGMUMEcqfEN2Y2Jp4jYhYyR1.iUOIyQjQyP1gSaWQjXtPjKt3hKt3hKt3hKt3hKt3hKt3hKt.kKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKtXlKtfTQt3hKt3hKtHjKCEjKt3hKt3hKt3hKt3BOujzPu0Fbu4VYtQmO7jTQjkFcC8lazI2arwVYx4iL0XiKy71XWwTcwIjPCMTQt3BN03VX4jDR50zcqMyR1MmQKA2RyQUYScTSwPjRAUmZgkTRJg1PB4jdqbzJCcyJ2k0XVE0QikiKGgTVTYkURA2RWkFRzf2aRs1TzfiVSc1PyDjKwYzSXAGTg4RRtX2brU0XCQSXTYUarwDTO4FYCY1SVAGNpM1a4HmPhMDVxECNG4DQyDkZ2EVRDUkUxfUZXcDbp4xPyjmcCUjV4oDZ1MlPgQzYt4ld3TEY4MEQsgVap4jPucCNqvFVMQycKYkUnoUcWgiMrEDdzT0TzsBV3bmcqnlSlIlMKYCLV8jLGQFMCYGNscEQh4BQt3hKt3hKt3hKt3hKt3hKt3hKt3BTt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hYt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hK77RREQVZzMzatQmbuwFakImO77hUSQ0LPwVcmklaSQWXzUlO..</STATE>
+    <LAYOUT>
+      <INPUTS>
+        <BUS index="0" layout="L R"/>
+      </INPUTS>
+      <OUTPUTS>
+        <BUS index="0" layout="L R"/>
+      </OUTPUTS>
+    </LAYOUT>
+  </FILTER>
   <CONNECTION srcFilter="1" srcChannel="0" dstFilter="7" dstChannel="0"/>
   <CONNECTION srcFilter="1" srcChannel="1" dstFilter="7" dstChannel="1"/>
-  <CONNECTION srcFilter="5" srcChannel="0" dstFilter="3" dstChannel="0"/>
-  <CONNECTION srcFilter="5" srcChannel="1" dstFilter="3" dstChannel="1"/>
+  <CONNECTION srcFilter="2" srcChannel="4096" dstFilter="8" dstChannel="4096"/>
+  <CONNECTION srcFilter="5" srcChannel="0" dstFilter="9" dstChannel="0"/>
+  <CONNECTION srcFilter="5" srcChannel="1" dstFilter="9" dstChannel="1"/>
   <CONNECTION srcFilter="7" srcChannel="0" dstFilter="5" dstChannel="0"/>
   <CONNECTION srcFilter="7" srcChannel="1" dstFilter="5" dstChannel="1"/>
+  <CONNECTION srcFilter="8" srcChannel="0" dstFilter="5" dstChannel="0"/>
+  <CONNECTION srcFilter="8" srcChannel="1" dstFilter="5" dstChannel="1"/>
+  <CONNECTION srcFilter="9" srcChannel="0" dstFilter="3" dstChannel="0"/>
+  <CONNECTION srcFilter="9" srcChannel="1" dstFilter="3" dstChannel="1"/>
 </FILTERGRAPH>
