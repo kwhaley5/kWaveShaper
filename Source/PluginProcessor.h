@@ -32,6 +32,10 @@ public:
    #endif
 
     void processBlock (juce::AudioBuffer<float>&, juce::MidiBuffer&) override;
+    void processSinusoidal(int channel, juce::AudioBuffer<float>& buffer);
+    void processQuadratic(int channel, juce::AudioBuffer<float>& buffer);
+    void processFactor(int channel, juce::AudioBuffer<float>& buffer);
+    void processGB(int channel, juce::AudioBuffer<float>& buffer);
 
     //==============================================================================
     juce::AudioProcessorEditor* createEditor() override;
@@ -60,14 +64,26 @@ public:
     juce::AudioProcessorValueTreeState apvts{ *this, nullptr, "parameters", createParameterLayout() };
 
 private:
-    float test;
+    
+    enum WaveShaper {
+        none,
+        sinusoidal,
+        quadratic,
+        factor,
+        GloubiBoulga
+    };
 
-    //juce::AudioBuffer<float>& clipperBuffer;
+    juce::dsp::Gain<float> inGain;
+    juce::dsp::Gain<float> outGain;
 
+    juce::AudioParameterBool* bypass{ nullptr };
     juce::AudioParameterInt* typeSelect{ nullptr };
-    juce::AudioParameterInt* clipSelect{ nullptr };
-    juce::AudioParameterFloat* amount{ nullptr };
-    juce::AudioParameterFloat* threshold{ nullptr };
+    juce::AudioParameterFloat* sinDistort{ nullptr };
+    juce::AudioParameterFloat* quadraticDistort{ nullptr };
+    juce::AudioParameterFloat* factorDistort{ nullptr };
+    juce::AudioParameterFloat* gbDistort{ nullptr };
+    juce::AudioParameterFloat* inGainValue{ nullptr };
+    juce::AudioParameterFloat* outGainValue{ nullptr };
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (WaveShaperAudioProcessor)
 };
