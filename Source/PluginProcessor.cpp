@@ -232,9 +232,11 @@ void WaveShaperAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
 
         }
 
-        if (clipSelect->get() == 1)
+        //Need to redo how this selector works, pretty sure it's keeping data I don't want
+
+        if (clipSelect->get() == 1) //Hard Clipper
         {
-            for (int s = 0; s < buffer.getNumSamples(); ++s) //This seems to work, but it would tech be hard clipping
+            for (int s = 0; s < buffer.getNumSamples(); ++s) 
             {
                 auto gain = juce::Decibels::decibelsToGain(threshold->get());
                 channelData[s] > gain ? channelData[s] = gain : channelData[s] = channelData[s];
@@ -242,19 +244,87 @@ void WaveShaperAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
             }
         }
 
-        else if (clipSelect->get() == 2) //Not sure why this isn't doing anything
+        else if (clipSelect->get() == 2) //Soft Clipper (cubixc)
         {
             for (int s = 0; s < buffer.getNumSamples(); ++s)
             {
-                auto gain = juce::Decibels::decibelsToGain(threshold->get());
-                auto cubic = gain - (pow(gain, 3) / 3);
-                channelData[s] > gain ? channelData[s] = cubic : channelData[s] = channelData[s];
-                channelData[s] < -gain ? channelData[s] = -cubic : channelData[s] = channelData[s];
-                
+                auto newLimit = juce::Decibels::decibelsToGain(threshold->get());
+                auto inverse = 1 / newLimit;
+                auto resizeSamples = channelData[s]  * inverse;
+                resizeSamples > 1 ? resizeSamples = 1 : resizeSamples = resizeSamples;
+                resizeSamples < -1 ? resizeSamples = -1 : resizeSamples = resizeSamples;
+                auto cubic = (resizeSamples - pow(resizeSamples, 3) / 3);
+     
+                channelData[s] = cubic * newLimit;
+            }
+        }
 
+        else if (clipSelect->get() == 3) //sin clipping, 
+        {
+            for (int s = 0; s < buffer.getNumSamples(); ++s)
+            {
+                auto newLimit = juce::Decibels::decibelsToGain(threshold->get());
+                auto inverse = 1 / newLimit;
+                auto resizeSamples = channelData[s] * inverse;
+                resizeSamples > 1 ? resizeSamples = 1 : resizeSamples = resizeSamples;
+                resizeSamples < -1 ? resizeSamples = -1 : resizeSamples = resizeSamples;
+
+                auto sinosidal = sin(3 * juce::MathConstants<float>::pi * resizeSamples / 4);
+
+                channelData[s] = sinosidal * newLimit;
+            }
+
+        }
+
+        else if (clipSelect->get() == 4) //hyperbolic tangent
+        {
+            for (int s = 0; s < buffer.getNumSamples(); ++s)
+            {
+                auto newLimit = juce::Decibels::decibelsToGain(threshold->get());
+                auto inverse = 1 / newLimit;
+                auto resizeSamples = channelData[s] * inverse;
+                resizeSamples > 1 ? resizeSamples = 1 : resizeSamples = resizeSamples;
+                resizeSamples < -1 ? resizeSamples = -1 : resizeSamples = resizeSamples;
+
+                auto hyperTan = tanh(5*resizeSamples)*(3/juce::MathConstants<float>::pi);
+
+                channelData[s] = hyperTan * newLimit;
+            }
+        }
+
+        else if (clipSelect->get() == 5) //arctangent tangent
+        {
+            for (int s = 0; s < buffer.getNumSamples(); ++s)
+            {
+                auto newLimit = juce::Decibels::decibelsToGain(threshold->get());
+                auto inverse = 1 / newLimit;
+                auto resizeSamples = channelData[s] * inverse;
+                resizeSamples > 1 ? resizeSamples = 1 : resizeSamples = resizeSamples;
+                resizeSamples < -1 ? resizeSamples = -1 : resizeSamples = resizeSamples;
+
+                auto hyperTan = atan(5 * resizeSamples) * (2 / juce::MathConstants<float>::pi);
+
+                channelData[s] = hyperTan * newLimit;
+            }
+        }
+
+        else if (clipSelect->get() == 2) //Soft Clipper (quntic)
+        {
+            for (int s = 0; s < buffer.getNumSamples(); ++s)
+            {
+                auto newLimit = juce::Decibels::decibelsToGain(threshold->get());
+                auto inverse = 1 / newLimit;
+                auto resizeSamples = channelData[s] * inverse;
+                resizeSamples > 1 ? resizeSamples = 1 : resizeSamples = resizeSamples;
+                resizeSamples < -1 ? resizeSamples = -1 : resizeSamples = resizeSamples;
+                auto quintic = resizeSamples - pow(resizeSamples, 5) / 5;
+
+                channelData[s] = quintic * newLimit;
             }
         }
     }
+
+    //need to figure out how to keep the volumes the same
 
 }
 
