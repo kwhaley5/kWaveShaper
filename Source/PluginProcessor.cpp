@@ -366,8 +366,8 @@ bool WaveShaperAudioProcessor::hasEditor() const
 
 juce::AudioProcessorEditor* WaveShaperAudioProcessor::createEditor()
 {
-    //return new WaveShaperAudioProcessorEditor (*this);
-    return new juce::GenericAudioProcessorEditor(*this);
+    return new WaveShaperAudioProcessorEditor (*this);
+    //return new juce::GenericAudioProcessorEditor(*this);
 }
 
 //==============================================================================
@@ -394,7 +394,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout WaveShaperAudioProcessor::cr
     auto gainRange = NormalisableRange<float>(-20, 20, .1, 1);
 
     layout.add(std::make_unique<AudioParameterFloat>("inGainValue", "Gain In", gainRange, 0));
-    layout.add(std::make_unique<AudioParameterInt>("typeSelect", "Disrotion Type", 1, 6, 1));
+    layout.add(std::make_unique<AudioParameterInt>("typeSelect", "Disrotion Type", 1, 4, 1));
     layout.add(std::make_unique<AudioParameterFloat>("sinDistort", "Sine Distortion Factor", amountRange, .5));
     layout.add(std::make_unique<AudioParameterFloat>("quadraticDistort", "Quadratic Distortion Factor", amountGreaterRange, 1));
     layout.add(std::make_unique<AudioParameterFloat>("factorDistort", "Factor Distortion Factor", amountRange, .5));
