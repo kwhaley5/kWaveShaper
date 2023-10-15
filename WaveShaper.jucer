@@ -12,6 +12,8 @@
       <FILE id="IDMrey" name="PluginEditor.cpp" compile="1" resource="0"
             file="Source/PluginEditor.cpp"/>
       <FILE id="dVHKcT" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
+      <FILE id="MZmvuQ" name="KiTiKLNF.h" compile="0" resource="0" file="../SimpleSynth/Source/GUI/KiTiKLNF.h"/>
+      <FILE id="jLVRvN" name="KiTiKLNF.cpp" compile="1" resource="0" file="../SimpleSynth/Source/GUI/KiTiKLNF.cpp"/>
     </GROUP>
   </MAINGROUP>
   <MODULES>

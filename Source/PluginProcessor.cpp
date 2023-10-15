@@ -155,6 +155,11 @@ void WaveShaperAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
     auto totalNumInputChannels  = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
 
+    for (auto channel = 0; channel < totalNumInputChannels; channel++) {
+        rmsIn[channel] = juce::Decibels::gainToDecibels(buffer.getRMSLevel(channel, 0, buffer.getNumSamples()));
+        if (rmsIn[channel] < -60) { rmsIn[channel] = -60; }
+    }
+
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
 
@@ -199,6 +204,11 @@ void WaveShaperAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
 
     outGain.setGainDecibels(outGainValue->get());
     outGain.process(context);
+
+    for (auto channel = 0; channel < totalNumInputChannels; channel++) {
+        rmsOut[channel] = juce::Decibels::gainToDecibels(buffer.getRMSLevel(channel, 0, buffer.getNumSamples()));
+        if (rmsOut[channel] < -60) { rmsOut[channel] = -60; }
+    }
 
     /******************************************************************************************************
     *
@@ -373,15 +383,28 @@ juce::AudioProcessorEditor* WaveShaperAudioProcessor::createEditor()
 //==============================================================================
 void WaveShaperAudioProcessor::getStateInformation (juce::MemoryBlock& destData)
 {
-    // You should use this method to store your parameters in the memory block.
-    // You could do that either as raw data, or use the XML or ValueTree classes
-    // as intermediaries to make it easy to save and load complex data.
+    juce::MemoryOutputStream mos(destData, true);
+    apvts.state.writeToStream(mos); 
 }
 
 void WaveShaperAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
-    // You should use this method to restore your parameters from this memory block,
-    // whose contents will have been created by the getStateInformation() call.
+    auto tree = juce::ValueTree::readFromData(data, sizeInBytes);
+    if (tree.isValid()) {
+        apvts.replaceState(tree);
+    }
+}
+
+float WaveShaperAudioProcessor::getRMS(int channel)
+{
+    jassert(channel == 0 || channel == 1);
+    return rmsIn[channel];
+}
+
+float WaveShaperAudioProcessor::getOutRMS(int channel)
+{
+    jassert(channel == 0 || channel == 1);
+    return rmsOut[channel];
 }
 
 juce::AudioProcessorValueTreeState::ParameterLayout WaveShaperAudioProcessor::createParameterLayout()

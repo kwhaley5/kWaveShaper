@@ -60,6 +60,9 @@ public:
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
 
+    float getRMS(int channel);
+    float getOutRMS(int channel);
+
     static juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
     juce::AudioProcessorValueTreeState apvts{ *this, nullptr, "parameters", createParameterLayout() };
 
@@ -75,6 +78,9 @@ private:
 
     juce::dsp::Gain<float> inGain;
     juce::dsp::Gain<float> outGain;
+
+    std::array<std::atomic<float>, 2> rmsIn;
+    std::array<std::atomic<float>, 2> rmsOut;
 
     juce::AudioParameterBool* bypass{ nullptr };
     juce::AudioParameterInt* typeSelect{ nullptr };
