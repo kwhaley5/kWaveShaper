@@ -148,9 +148,6 @@ bool WaveShaperAudioProcessor::isBusesLayoutSupported (const BusesLayout& layout
 
 void WaveShaperAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
-    //TODO:
-        //figure out how to change knobs instead of just having multiple
-
     juce::ScopedNoDenormals noDenormals;
     auto totalNumInputChannels  = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
@@ -377,7 +374,6 @@ bool WaveShaperAudioProcessor::hasEditor() const
 juce::AudioProcessorEditor* WaveShaperAudioProcessor::createEditor()
 {
     return new WaveShaperAudioProcessorEditor (*this);
-    //return new juce::GenericAudioProcessorEditor(*this);
 }
 
 //==============================================================================

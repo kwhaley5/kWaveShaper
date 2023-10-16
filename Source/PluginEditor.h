@@ -40,16 +40,13 @@ private:
     juce::Slider inGain         { "In Gain" },
                  outGain        { "Out Gain" },
                  typeSelect     { "Type Select" },
-                 distortion     { "Distortion" };
+                 distortion     { "Shape" };
 
-    juce::ToggleButton bypass   { "Bypass" };
-    juce::Slider bypassTest{ "Bypass" };
+    juce::Slider bypass         { "Bypass" };
 
     using Attachment = juce::AudioProcessorValueTreeState::SliderAttachment;
-    Attachment inGainAT, outGainAT, typeSelectAT, bypassTestAT;
+    Attachment inGainAT, outGainAT, typeSelectAT, bypassAT;
     std::unique_ptr<Attachment> distortionAT;
-
-    juce::AudioProcessorValueTreeState::ButtonAttachment bypassAT;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (WaveShaperAudioProcessorEditor)
 };

@@ -4,6 +4,11 @@
               addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1" companyName="KiTiK Music"
               companyWebsite="www.kwaudioproduction.com" pluginVST3Category="Distortion">
   <MAINGROUP id="vs1STQ" name="WaveShaper">
+    <GROUP id="{0F4F6C5F-666E-180D-4AB7-A2255AC8936C}" name="Assets">
+      <FILE id="c3v0Ec" name="OFFSHORE.TTF" compile="0" resource="1" file="../../../APPDATA/LOCAL/MICROSOFT/WINDOWS/FONTS/OFFSHORE.TTF"/>
+      <FILE id="SFu5ia" name="KITIK_LOGO_NO_BKGD.png" compile="0" resource="1"
+            file="../../Muisc/Pictures/KITIK_LOGO_NO_BKGD.png"/>
+    </GROUP>
     <GROUP id="{037BFAD1-D810-C4D2-5A4D-FE6EFDC361F0}" name="Source">
       <FILE id="RdG4Kp" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
